@@ -1,6 +1,6 @@
 ###ABOUT###
 
-Bulk Batch Image Editor, Background Remover, Cropper, Recolorer, AI Filename Renamer, and Organizer is a collective program chain frontend for editing images in bulk. It features programs that can automatically crop images, remove image backgrounds via AI, rename images to matching similar images found via either the Google Vision or Ebay API, recolor images, and generate image metadata text files via Google Vision (experimental). It is an application designed to be portable/self-contained and formatted for common Linux distributions currently due to external package dependency requirements.
+Bulk Batch Image Editor, Background Remover, Cropper, Recolorer, AI Filename Renamer, and Organizer is a collective program chain frontend for editing images in bulk. It features programs that can automatically crop images, remove image backgrounds via AI, rename images to matching similar images found via either the Google Vision or Ebay API, recolor images, and generate image metadata text files via Google Vision (experimental). It is an application designed to be portable/self-contained and recommended for common Linux distributions currently due to external package dependency requirements. Theoretically, it is cross-platform as it entirely depend on Python libraries and Python for operation, but testing has only been done on conventional and common Linux distributions due to concerns of the future of the Windows and Macintosh Oprating Systems.
 
 ###LICENSING###
 
