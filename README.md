@@ -1,6 +1,6 @@
 ###ABOUT###
 
-Bulk Batch Image Editor, Background Remover, Cropper, Recolorer, AI Filename Renamer, and Organizer is a collective program chain frontend for editing images in bulk. It features programs that can automatically crop images, remove image backgrounds via AI, rename images to matching similar images found via either the Google Vision or Ebay API, recolor images, and generate image metadata text files via Google Vision (experimental). It is an application designed to be portable/self-contained and recommended for common Linux distributions currently due to external package dependency requirements. Theoretically, it is cross-platform as it entirely depends on Python libraries and Python for operation, but testing has only been done on conventional and common Linux distributions due to concerns of the future of the Windows and Macintosh Oprating Systems.
+Automatic Bulk Image Formatter and Renamer is a collective program chain frontend for editing images in bulk. It features programs that can automatically crop images, remove image backgrounds via AI, rename images to matching similar images found via either the Google Vision or Ebay API, recolor images, and generate image metadata text files via Google Vision (experimental).
 
 ###LICENSING###
 
@@ -57,6 +57,7 @@ Please see LICENSE file in main program directory for software licensing informa
 	21. Install PyQt5 for GUI purposes.
 		pip install pyqt5
 	22. Make sure "xterm" is the default program for running shell files in any GUI desktop environment system as well as double-checking to make sure that the shell files have executable and read-write permissions. Some other terminals may try running multiple shell instances at the same time - this program is not designed to work that way. All sub application instances must be sequential for each sub application in the bulk image processing "chain" to work properly. No parallel computing allowed.
+	23. Due to lack of font .ttf file location and indexing standardization on Linux distributions, please make sure that you have installed "DejaVuSans.ttf" globally on your system for effective indexing at this time when using the text stamper in the Repixelater sub application. Most distributions should have it by default, but just in case, double-check that if there are any issues.
 
 ###USAGE###
 
@@ -71,60 +72,91 @@ Please see LICENSE file in main program directory for software licensing informa
 
 -Be prepared for temporary mass storage "bloat" that will temporarily occur as the program runs, as image files from the "Master_Input_Folder" will be temporarily copied into each of the local input directories and subsequent output directories for each subprogram that is enabled for the bulk image editing process. The files are copied and not moved about those directories due to potential diagnostic reasons while the subprograms are running. Those folders are cleared when the application finishes all subprograms in the chain without issue and copies the finalized edited images into the "Master_Output_Folder." 
 
--Images to be bulk edited follow the following flow pattern from step 1 to step 8, but any subprogram can be skipped over depending on user preference. Please also note that the image files are directly fed the preceeding subprogram's output to the next, if applicable, subprogram's input - with the exception of the Metadata Generator, as it functions on a separate "input chain," using unedited original images as its source. For example, a color adjusted outputted image from the Color Adjuster will be fed into the input of the Background Remover subprogram if both are enabled in the subprogram chain and so forth:
+-Images to be bulk edited follow the following flow pattern below from step 1 to step 8, but any subprogram can be skipped over depending on user preference. Please also note that the image files are directly fed the preceeding subprogram's output to the next, if applicable, subprogram's input - with the exception of the Metadata Generator, as it functions on a separate "input chain," using unedited original images as its source. For example, a repixelated outputted image from the Repixelater will be fed into the input of the Background Remover subprogram if both are enabled in the subprogram chain and so forth:
 
---1.) [Get Images from "Main_Input_Folder"] -> 2.) Subprogram: Color Adjuster -> 3.) Subprogram: Background Remover -> 4.) Subprogram: Metadata Generator -> 5.) Subprogram: AI Filename Renamer -> 6.) Subprogram: Automatic Cropper -> 7.) [Consolidate Edited Files into Corresponding Folders in "Main_Output_Directory"] -> 8.) Subprogram: In-between Images Processor
+--1.) [Get Images from "Main_Input_Folder"] -> 2.) Subprogram: Repixelater -> 3.) Subprogram: Background Remover -> 4.) Subprogram: Metadata Generator -> 5.) Subprogram: AI Filename Renamer -> 6.) Subprogram: Automatic Cropper -> 7.) [Consolidate Edited Files into Corresponding Folders in "Main_Output_Directory"] -> 8.) Subprogram: In-between Images Processor
 ##
 
-#Color Adjuster Usage#
--This subprogram adjusts the coloring of images in bulk. It runs based on a string of custom commands all CAPITALIZED with their parameter numbers (if applicable) directly after each command. Each command is separated by a comma with NO SPACE. The commands are followed from left to right of the string. 
+#Repixelater Usage#
+-This subprogram adjusts the pixel mapping/coloration of images in bulk. It runs based on a string of custom commands with their parameter numbers (if applicable) directly after each command in paranthesis. Each command is separated by a comma with spacing. The commands are followed from left to right of the string. 
 
--This is an example of a program that adjusts the contrast of an image by a factor of 2.2, then adjusts its brightness by a factor of 1.1, and then runs the "Flattest Histogram Specification with Accurate Brightness Preservation" color correcting algorithm on the image, in that order, excluding the "--" characters:
---CONTRAST2.2,BRIGHTNESS1.1,FHSABP
+-This is an example of a program that stamps "Honey, I shrunk the kids." in 96-point blue font 1/4 relative image length and 1/4 relative image height, rotates the image 40.1 degrees clockwise, mirrors it vertically across the y-axis, and colorizes it green:
+--textstamp("Honey, I shrunk the kids.", 0.25, 0.25, 96, 0, 0, 255), rotate(40.1), mirror_vertical, colorize(0, 255, 0)
 
--These are the commands that can be used in Color Adjuster strings/scripts. Be mindful of the string/script syntax, as improper syntax may break the subprogram at this time:
---BBHE (Brightness Preserving Histogram Equalization) {No Parameters}
+-These are the commands that can be used in Repixelater strings/scripts. Be mindful of the string/script syntax, as improper syntax may break the subprogram at this time, in spite of recent efforts to mitigate those risks:
+
+--bbhe (Brightness Preserving Histogram Equalization) {No Parameters}
 ---Kim, Yeong-Taeg.
 ---Contrast enhancement using brightness preserving bi-histogram equalization.
 ---IEEE transactions on Consumer Electronics 43, no. 1 (1997): 1-8.
---BHEPL (Bi-Histogram Equalization with a Plateau Limit) {No Parameters}
+
+--bhepl (Bi-Histogram Equalization with a Plateau Limit) {No Parameters}
 ---Ooi, Chen Hee, Nicholas Sia Pik Kong, and Haidi Ibrahim.
 ---Bi-histogram equalization with a plateau limit for digital image enhancement.
 ---IEEE transactions on consumer electronics 55, no. 4 (2009): 2072-2080.
---BPHEME (Brightness Preserving Histogram Equalization with Maximum Entropy) {No Parameters}
+
+--bpheme (Brightness Preserving Histogram Equalization with Maximum Entropy) {No Parameters}
 ---Wang, Chao, and Zhongfu Ye.
 ---Brightness preserving histogram equalization with maximum entropy: a variational perspective.
 ---IEEE Transactions on Consumer Electronics 51, no. 4 (2005): 1326-1334.
---DSIHE (Dualistic Sub-Image Histogram Equalization) {No Parameters}
+
+--brightness{Decimal Factor}	
+---Adjusts image brightness.
+---This can be used to control the brightness of an image. An enhancement factor of 0.0 gives a black image, a factor of 1.0 gives the original image, and greater values increase the brightness of the image.
+
+--colorize{[Red Color Integer Value 0-255(Inclusive)], [Green Color Integer Value 0-255(Inclusive)], [Blue Color Integer Value 0-255(Inclusive)]}
+---Colorizes an image with a given color, presented in an integer RGB format. Each RGB value is represented as an integer from 0-255 inclusive, passed as 3 arguments in the parameter.
+
+--contrast{Decimal Factor}
+---Adjusts image contrast.
+---This can be used to control the contrast of an image, similar to the contrast control on a TV set. An enhancement factor of 0.0 gives a solid gray image, a factor of 1.0 gives the original image, and greater values increase the contrast of the image.
+
+--dsihe (Dualistic Sub-Image Histogram Equalization) {No Parameters}
 ---Wang, Yu, Qian Chen, and Baeomin Zhang.
 ---Image enhancement based on equal area dualistic sub-image histogram equalization method.
 ---IEEE Transactions on Consumer Electronics 45, no. 1 (1999): 68-75.
---FHSABP (Flattest Histogram Specification with Accurate Brightness Preservation) {No Parameters}
+
+--fhsabp (Flattest Histogram Specification with Accurate Brightness Preservation) {No Parameters}
 ---Wang, C., J. Peng, and Z. Ye.
 ---Flattest histogram specification with accurate brightness preservation.
 ---IET Image Processing 2, no. 5 (2008): 249-262.
---GHE (Global Histogram Equalization) {No Parameters}
+
+--ghe (Global Histogram Equalization) {No Parameters}
 ---This function is similar to equalizeHist(image) in opencv.
---MMBEBHE (Minimum Mean Brightness Error Histogram Equalization) {No Parameters}
+
+--mirror_horizontal
+---Mirrors the image accross the x-axis. Requires no parameter.
+
+--mirror_vertical
+---Mirrors the image accross the y-axis. Requires no parameter.
+
+--mmbebhe(Minimum Mean Brightness Error Histogram Equalization) {No Parameters}
 ---Chen, Soong-Der, and Abd Rahman Ramli.
 ---Minimum mean brightness error bi-histogram equalization in contrast enhancement.
 ---IEEE transactions on Consumer Electronics 49, no. 4 (2003): 1310-1319.
---RLBHE (Range Limited Bi-Histogram Equalization) {No Parameters}
+
+--resize{[Float Horizontal Dimension Multiplier Value > 0 ],[Float Vertical Dimension Multiplier Value > 0]}
+---Resizes image if the operation code is present. The resizing is done by multiplying decimal factors greater than 0 to the number of horazontal and vertical pixels via passing two parameters - one for each dimension.
+
+--rlbhe (Range Limited Bi-Histogram Equalization) {No Parameters}
 ---Zuo, Chao, Qian Chen, and Xiubao Sui.
 ---Range limited bi-histogram equalization for image contrast enhancement.
 ---Optik 124, no. 5 (2013): 425-431.
---BRIGHTNESS{Decimal Factor}	
----Adjusts image brightness.
----This can be used to control the brightness of an image. An enhancement factor of 0.0 gives a black image, a factor of 1.0 gives the original image, and greater values increase the brightness of the image.
---CONTRAST{Decimal Factor}
----Adjusts image contrast.
----This can be used to control the contrast of an image, similar to the contrast control on a TV set. An enhancement factor of 0.0 gives a solid gray image, a factor of 1.0 gives the original image, and greater values increase the contrast of the image.
---SATURATION{Decimal Factor}	
+
+--rotate{[Float Image Rotation Degree Value -360.0-360.0(Inclusive)]}
+---Manually rotates image if the operation code is present. Any float number between -360.0 to 360.0 inclusive after the rotation keyword is treated as the rotation angle parameter. The positive or negative denotes the direction of the rotation.
+
+--saturation{Decimal Factor}	
 ---Adjusts image color balance.
 ---This can be used to adjust the color balance of an image, in a manner similar to the controls on a color TV set. An enhancement factor of 0.0 gives a black and white image. A factor of 1.0 gives the original image. More indefinitely oversaturates the image.
---SHARPNESS{Decimal Factor}	
+
+--sharpness{Decimal Factor}	
 ---Adjusts image sharpness.
 ---This can be used to adjust the sharpness of an image. An enhancement factor of 0.0 gives a blurred image, a factor of 1.0 gives the original image, and a factor of 2.0 gives a sharpened image. More indefinitely sharpens the image.
+
+--textstamp([Text String], [0 < Relative Location Multiplier Horizontal Dimension Float < 1], [0 < Relative Location Multiplier Vertical Dimension Float < 1], [Font Size Integer > 0], [Red Color Level RGB Integer 0-255(Inclusive)], Green Color Level RGB Integer 0-255(Inclusive)], Blue Color Level RGB Integer 0-255(Inclusive)])
+---Adds a text stamp to an image. The user may customize what text is stamped, its location relative to the resolution for each image, font size, and font color, in that argument order. Please note that, at this time, 
+---Due to lack of font .ttf file location and indexing standardization on Linux distributions, please make sure that you have installed "DejaVuSans.ttf" globally on your system for effective indexing at this time when using the text stamper. Most distributions should have it by default, but just in case, double-check that if there are any issues.
 
 ##
 
