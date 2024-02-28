@@ -1,6 +1,6 @@
 ###ABOUT###
 
-Automatic Bulk Image Formatter and Renamer is a collective program chain frontend for editing images in bulk. It features programs that can automatically crop images, remove image backgrounds via AI, rename images to matching similar images found via either the Google Vision or Ebay API, edit image pixel maps, and generate image metadata text files via Google Vision (experimental).
+Automatic Bulk Image Formatter and Renamer is a collective program chain frontend for editing images in bulk. It features programs that can automatically crop images, remove image backgrounds via AI, rename images to matching similar images found via either the Google Vision or Ebay API, recolor images, and generate image metadata text files via Google Vision (experimental).
 
 ###LICENSING###
 
@@ -54,10 +54,12 @@ Please see LICENSE file in main program directory for software licensing informa
 		pip install image-enhancement
 	20. Install imutils
 		pip install --upgrade imutils
-	21. Install PyQt5 for GUI purposes.
-		pip install pyqt5
+	21. Install PyQt6 for GUI purposes - NOTE: Recent updates now depend on PyQt6 over older versions that used PyQt5. Due to several namespace changes in the library, make sure that you're no longer relying on PyQt5 anymore if you've used older versions of the program.
+		pip install pyqt6
 	22. Make sure "xterm" is the default program for running shell files in any GUI desktop environment system as well as double-checking to make sure that the shell files have executable and read-write permissions. Some other terminals may try running multiple shell instances at the same time - this program is not designed to work that way. All sub application instances must be sequential for each sub application in the bulk image processing "chain" to work properly. No parallel computing allowed.
 	23. Due to lack of font .ttf file location and indexing standardization on Linux distributions, please make sure that you have installed "DejaVuSans.ttf" globally on your system for effective indexing at this time when using the text stamper in the Repixelater sub application. Most distributions should have it by default, but just in case, double-check that if there are any issues.
+	24. For continued quality support, we'll need ad rendering functionality for every subsequent version released after the date 2-26-24. Please install PyQtWebEngine for proper functionality.
+		pip install PyQt6-WebEngine
 
 ###USAGE###
 
