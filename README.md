@@ -1,6 +1,6 @@
 ###ABOUT###
 
-Automatic Bulk Image Formatter and Renamer is a collective program chain frontend for editing images in bulk. It features programs that can automatically crop images, remove image backgrounds via AI, rename images to matching similar images found via either the Google Vision or Ebay API, recolor images, and generate image metadata text files via Google Vision (experimental).
+Automatic Bulk Image Formatter and Renamer is a collective program chain frontend for editing images in bulk. It features programs that can automatically crop images, remove image backgrounds via AI, rename images to matching similar images found via either the Google Vision or Ebay API, recolor images, and generate image metadata (DEPRECIATED) text files via Google Vision (experimental).
 
 ###LICENSING###
 
@@ -10,7 +10,7 @@ Please see LICENSE file in main program directory for software licensing informa
 
 -This program depends on a collection of local Shell Script, Python, Python Imaging libraries that need to be setup in your computing environment listed below. 
 
--For metadata text file generation and AI image identification and renaming features to work properly, your system also needs to be configured to use the official Google Cloud and Vision API as well as a local unofficial Python Ebay API frontend and a fresh Production Environment O'Auth user token string generated from the Ebay Developer website THAT NEEDS TO COPIED OVER AND OVERWRITE ALL TEXT IN THE "ebayUserAccessToken.txt" FILE FOUND IN THE MAIN PROGRAM DIRECTORY EVERY FEW HOURS. TO BE CLEAR, THAT TOKEN EXPIRES AND IS UNUSABLE AFTER EVERY FEW HOURS FOR SECURITY PURPOSES.
+-(DEPRECIATED) For metadata text file generation and AI image identification and renaming features to work properly, your system also needs to be configured to use the official (DEPRECIATED) Google Cloud and Vision API as well as a local unofficial Python Ebay API frontend and a fresh Production Environment O'Auth user token string generated from the Ebay Developer website THAT NEEDS TO COPIED OVER AND OVERWRITE ALL TEXT IN THE "ebayUserAccessToken.txt" FILE FOUND IN THE MAIN PROGRAM DIRECTORY EVERY FEW HOURS. TO BE CLEAR, THAT TOKEN EXPIRES AND IS UNUSABLE AFTER EVERY FEW HOURS FOR SECURITY PURPOSES.
 
 -While inconclusive, it is tentatively recommended to use the program on a commonly supported Debian-based Linux operating system. We tested ours on an x64 xUbuntu 23.10 "fresh" installation as of time of writing. The list below describes all of the libraries we had to install on our system to satisfy the program package dependencies as of time of writing. Please note that the exact list of package dependencies and specific installation methods may vary from system to system.
 
@@ -30,36 +30,16 @@ Please see LICENSE file in main program directory for software licensing informa
 		pip install ebaysdk
 	8.) Double-check that "curl" and "apt-transport-https" are installed: (Note: Your specific procedures to accomplish this task on your operating system may vary. Please see https://cloud.google.com/sdk/docs/install-sdk)
 		sudo apt-get install apt-transport-https ca-certificates gnupg curl sudo
-	9.) If you have the old snap package, google-cloud-sdk, installed, remove it at the command line: (Note: Your specific procedures to accomplish this task on your operating system may vary. Please see https://cloud.google.com/sdk/docs/install-sdk)
-		snap remove google-cloud-sdk
-	10.) At the command line, install the gcloud CLI snap package: (Note: Your specific procedures to accomplish this task on your operating system may vary. Please see https://cloud.google.com/sdk/docs/install-sdk)
-		snap install google-cloud-cli --classic
-	11.) Intialize Google Cloud locally. (Note: Your specific procedures to accomplish this task on your operating system may vary. Please see https://cloud.google.com/sdk/docs/install-sdk)
-		gcloud init
-	12.) Select the Google Cloud project that you created either locally or on the online Google Cloud Console:
-		gcloud config set project PROJECT_ID edit
-	13.) Enable the Cloud Natural Language API either locally or through the online Google Cloud Console:
-		gcloud services enable language.googleapis.com
-	14. Create local authentication credentials for your Google Account locally:
-		gcloud auth application-default login
-	15. Install Python client-side-library for google-cloud-language
-		pip install --upgrade google-cloud-language
-	16. Install iPython
+	9. Install iPython
 		pip install ipython OR sudo apt install python3-ipython
-	17. Double-check that Google Vision API is enabled on your Google Cloud account either locally or through the Google Cloud Online Console
-		gcloud services enable vision.googleapis.com
-	18. Install Google Vision Python API locally via PIP:
-		pip install google-cloud-vision
-	19. Install Python image-enhancement library (for image recoloring)
+	10. Install Python image-enhancement library (for image recoloring)
 		pip install image-enhancement
-	20. Install imutils
+	11. Install imutils
 		pip install --upgrade imutils
-	21. Install PyQt6 for GUI purposes - NOTE: Recent updates now depend on PyQt6 over older versions that used PyQt5. Due to several namespace changes in the library, make sure that you're no longer relying on PyQt5 anymore if you've used older versions of the program.
-		pip install pyqt6
-	22. Make sure "xterm" is the default program for running shell files in any GUI desktop environment system as well as double-checking to make sure that the shell files have executable and read-write permissions. Some other terminals may try running multiple shell instances at the same time - this program is not designed to work that way. All sub application instances must be sequential for each sub application in the bulk image processing "chain" to work properly. No parallel computing allowed.
-	23. Due to lack of font .ttf file location and indexing standardization on Linux distributions, please make sure that you have installed "DejaVuSans.ttf" globally on your system for effective indexing at this time when using the text stamper in the Repixelater sub application. Most distributions should have it by default, but just in case, double-check that if there are any issues.
-	24. For continued quality support, we'll need ad rendering functionality for every subsequent version released after the date 2-26-24. Please install PyQtWebEngine for proper functionality.
-		pip install PyQt6-WebEngine
+	12. Install PyQt6 for GUI purposes - NOTE: Recent updates now depend on PyQt6 over older versions that used PyQt5. Due to several namespace changes in the library, make sure that you're no longer relying on PyQt5 anymore if you've used older versions of the program.
+		pip install pyqt6 (or sudo apt-get install python3-pyqt6)
+	13. Make sure "xterm" is the default program for running shell files in any GUI desktop environment system as well as double-checking to make sure that the shell files have executable and read-write permissions. Some other terminals may try running multiple shell instances at the same time - this program is not designed to work that way. All sub application instances must be sequential for each sub application in the bulk image processing "chain" to work properly. No parallel computing allowed.
+	14. Due to lack of font .ttf file location and indexing standardization on Linux distributions, please make sure that you have installed "DejaVuSans.ttf" globally on your system for effective indexing at this time when using the text stamper in the Repixelater sub application. Most distributions should have it by default, but just in case, double-check that if there are any issues.
 
 ###USAGE###
 
@@ -74,9 +54,9 @@ Please see LICENSE file in main program directory for software licensing informa
 
 -Be prepared for temporary mass storage "bloat" that will temporarily occur as the program runs, as image files from the "Master_Input_Folder" will be temporarily copied into each of the local input directories and subsequent output directories for each subprogram that is enabled for the bulk image editing process. The files are copied and not moved about those directories due to potential diagnostic reasons while the subprograms are running. Those folders are cleared when the application finishes all subprograms in the chain without issue and copies the finalized edited images into the "Master_Output_Folder." 
 
--Images to be bulk edited follow the following flow pattern below from step 1 to step 8, but any subprogram can be skipped over depending on user preference. Please also note that the image files are directly fed the preceeding subprogram's output to the next, if applicable, subprogram's input - with the exception of the Metadata Generator, as it functions on a separate "input chain," using unedited original images as its source. For example, a repixelated outputted image from the Repixelater will be fed into the input of the Background Remover subprogram if both are enabled in the subprogram chain and so forth:
+-Images to be bulk edited follow the following flow pattern below from step 1 to step 8, but any subprogram can be skipped over depending on user preference. Please also note that the image files are directly fed the preceeding subprogram's output to the next, if applicable, subprogram's input - with the exception of the Metadata Generator (DEPRECIATED), as it functions on a separate "input chain," using unedited original images as its source. For example, a repixelated outputted image from the Repixelater will be fed into the input of the Background Remover subprogram if both are enabled in the subprogram chain and so forth:
 
---1.) [Get Images from "Main_Input_Folder"] -> 2.) Subprogram: Repixelater -> 3.) Subprogram: Background Remover -> 4.) Subprogram: Metadata Generator -> 5.) Subprogram: AI Filename Renamer -> 6.) Subprogram: Automatic Cropper -> 7.) [Consolidate Edited Files into Corresponding Folders in "Main_Output_Directory"] -> 8.) Subprogram: In-between Images Processor
+--1.) [Get Images from "Main_Input_Folder"] -> 2.) Subprogram: Repixelater -> 3.) Subprogram: Background Remover -> 4.) (DEPRECIATED) Subprogram: Metadata Generator -> 5.) Subprogram: AI Filename Renamer -> 6.) Subprogram: Automatic Cropper -> 7.) [Consolidate Edited Files into Corresponding Folders in "Main_Output_Directory"] -> 8.) Subprogram: In-between Images Processor
 ##
 
 #Repixelater Usage#
@@ -167,7 +147,7 @@ Please see LICENSE file in main program directory for software licensing informa
 
 ##
 
-#Metadata Generator Usage# (Heavily Experimental and Unstable; May Be Depreciated or Refined in Future Releases Depending on User Demand)
+#DEPRECIATED: Metadata Generator Usage# (Heavily Experimental and Unstable; May Be Depreciated or Refined in Future Releases Depending on User Demand)
 -If enabled, this subprogram reads text found on an image and saves it as optional description, price, shipping dimensions, and shipping weight fields to a generated a text file with "_metadata" at the end of the file name. It's useful for cataloging some image metadata that will later be used when publishing ecommerce listings using the image, for example. Each line is optional and is detected to the corresponding field based on key characters, such as the "$" denoting that it is about price or "x" denoting that the line is for a dimensions field. Each field can be defined by writing lines of text directly into the image prior to running the bulk image editing program with the following syntax example, with each new field being denoted with a semicolon and new line written into the image file. Please note that it is best practice to put the lines of text into a conspicuous and high contrast area of the photo without other text in the picture for best results. We recommend placing the lines in a corner of the image. The metadata generator grabs the lines from the original unedited image and not any edited image, so you do not need to worry about the Background Remover, for example, removing the text before the Metadata Generator has a chance to read the image. Please note that this subprogram is highly dependent on Google Vision and its continuing machine learning models, so the quality of the results will likely vary over time.
 --Example of proper field usage, writing high-contrast text in a corner of a given image, denoted as separate lines starting with semicolons:
 	; This is the image description.
@@ -178,7 +158,7 @@ Please see LICENSE file in main program directory for software licensing informa
 ##
 
 #AI File Renamer Usage#
--If enabled, this subprogram renames the filenames of the inputted image files based on the most similar matching image reported from either the Google Cloud Vision API or the Ebay API depending on user preference. The rename is also reflected in the future corresponding folders that will be generated as well for the image. This feature is useful for automated image identification for organizational purposes, but can have mixed results depending on learning machine models and image quality. At this time, the Ebay API tends to return more descriptive and relevant titles for the images, so it is the more recommend option. The Google Vision API may become depreciated in later releases.
+-If enabled, this subprogram renames the filenames of the inputted image files based on the most similar matching image reported from either the (DEPRECIATED) Google Cloud Vision API or the Ebay API depending on user preference. The rename is also reflected in the future corresponding folders that will be generated as well for the image. This feature is useful for automated image identification for organizational purposes, but can have mixed results depending on learning machine models and image quality. At this time, the Ebay API tends to return more descriptive and relevant titles for the images, so it is the more recommend option. The Google Vision API may become depreciated in later releases.
 
 -Please note that the Google Vision API should have all Google Cloud dependencies installed on the system and appropriate configurations setup on both the local system-side and the online Google Cloud account-side. See setup for more details.
 
