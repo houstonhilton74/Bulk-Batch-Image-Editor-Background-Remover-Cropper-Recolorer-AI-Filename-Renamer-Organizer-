@@ -8,38 +8,39 @@ Please see LICENSE file in main program directory for software licensing informa
 
 ###SETUP###
 
--This program depends on a collection of local Shell Script, Python, Python Imaging libraries that need to be setup in your computing environment listed below. 
+-------------------------------
+AUTOMATIC SETUP METHOD (RECOMMENDED):
+-------------------------------
+-Assuming that you do not have any special Python library configurations in your operating system environment or other unconventional package dependency setups:
+	1.) In the main program directory, you will find a script file titled, "auto_setup.sh." Execute it in a terminal, and check the terminal log to ensure that there were no issues with your specific environment.
+	2.) Upon successful execution, you should tentatively be able to run the program from the "RUNME.sh" file found in the main application directory.
+		- Due to lack of font .ttf file location and indexing standardization on Linux distributions, please make sure that you have installed "DejaVuSans.ttf" globally on your system for effective indexing at this time when using the text stamper in the Repixelater sub application. Most distributions should have it by default, but just in case, double-check that if there are any issues.
+		- If you would like, you may run it in diagnostic mode to help isolate any problems that may occur using the "RUNME_diagnostic_mode.sh" file found in the main program directory.
+------------------------------------------------------------------------------------------------
+MANUAL SETUP METHOD (NOT RECOMMENDED UNLESS YOU REQUIRE SPECIAL PYTHON LIBRARY LOCATIONS, ETC):
+------------------------------------------------------------------------------------------------
+
+-This program depends on a collection of local Python, Python Imaging, and other miscellaneous libraries that need to be setup in your computing environment listed below. 
 
 -(DEPRECIATED) For metadata text file generation and AI image identification and renaming features to work properly, your system also needs to be configured to use the official (DEPRECIATED) Google Cloud and Vision API as well as a local unofficial Python Ebay API frontend and a fresh Production Environment O'Auth user token string generated from the Ebay Developer website THAT NEEDS TO COPIED OVER AND OVERWRITE ALL TEXT IN THE "ebayUserAccessToken.txt" FILE FOUND IN THE MAIN PROGRAM DIRECTORY EVERY FEW HOURS. TO BE CLEAR, THAT TOKEN EXPIRES AND IS UNUSABLE AFTER EVERY FEW HOURS FOR SECURITY PURPOSES.
 
--While inconclusive, it is tentatively recommended to use the program on a commonly supported Debian-based Linux operating system. We tested ours on an x64 xUbuntu 23.10 "fresh" installation as of time of writing. The list below describes all of the libraries we had to install on our system to satisfy the program package dependencies as of time of writing. Please note that the exact list of package dependencies and specific installation methods may vary from system to system.
+-While inconclusive, it is tentatively recommended to use the program on a commonly supported Debian-based Linux operating system. We tested ours on an x64 xUbuntu 24.04 "fresh" installation as of time of writing. The list below describes all of the libraries we had to install on our system to satisfy the program package dependencies as of time of writing. Please note that the exact list of package dependencies and specific installation methods may vary from system to system.
 
 -NOTE: AFTER INSTALLING AND CONFIGURING THE DEPENDENCIES LISTED BELOW, IT IS STRONGLY RECOMMENDED TO START THE PROGRAM IN DIAGNOSTIC MODE FIRST TO ENSURE THAT EACH DESIRED "SUB PROGRAM" IS NOT BREAKING DUE TO A SYSTEM-WIDE DEPENDENCY/CONFIGURATION ISSUE. ONE BROKEN SUB PROGRAM MAY ALSO BREAK ANY FOLLOWING CHAIN OF SUB PROGRAMS ENABLED DURING A USER-ELECTED BULK IMAGE EDITING PROCESS. Diagnostic Mode can be accessed by running the "RUNME_diagnostic_mode.sh" file located in the main program directory with xTerm (other terminal programs may work; we just recommend this because the program was predominantly tested with xTerm specifically during its development.) Diagnostic Mode asks you which sub programs you would like to use in your bulk image processing "chain," and then puts each sub application on hold until you enter in "exit()" at the input line. This hold shows all terminal output from each sub program in the chain, including script breaks that may occur with dependency/configuration issues.
 
 -Be sure that AT LEAST the following are properly installed and/or configured on your system before starting the program. Please note that your environment may not be limited to this list and that actual installation commands may vary:
-	1.) Make sure that you have successfully created a Google Cloud and Ebay Developer account online. Recommended Google Cloud account setup commands that tend to be easiest will be mentioned in the listings below. If you get stuck or want to check if your setup methods vary with your system, please see https://cloud.google.com/sdk/docs/install-sdk
-	2.) Install pip or python3-pip
-	3.) Install numpy 
-		sudo apt install python3-numpy; May need pipx; pipx install radian
-	4.) Install xTerm
-	5.) Install rembg
-		pip install rembg
-	6.) Install rembg CLI (Command Line Interface)
-		pip install rembg[cli]
-	7.) Install ebaySDK (Unofficial Python Ebay SDK Library) 
-		pip install ebaysdk
-	8.) Double-check that "curl" and "apt-transport-https" are installed: (Note: Your specific procedures to accomplish this task on your operating system may vary. Please see https://cloud.google.com/sdk/docs/install-sdk)
+	1.) Install pipx
+	2.) Install numpy Python library 
+	3.) Install radian Python library
+	4.) Install rembg Python library
+	6.) Install ebaySDK Python Library (Unofficial Python Ebay SDK Library) 
+	7.) Double-check that "curl" and "apt-transport-https" are installed: (Note: Your specific procedures to accomplish this task on your operating system may vary. Please see https://cloud.google.com/sdk/docs/install-sdk)
 		sudo apt-get install apt-transport-https ca-certificates gnupg curl sudo
-	9. Install iPython
-		pip install ipython OR sudo apt install python3-ipython
-	10. Install Python image-enhancement library (for image recoloring)
-		pip install image-enhancement
-	11. Install imutils
-		pip install --upgrade imutils
-	12. Install PyQt6 for GUI purposes - NOTE: Recent updates now depend on PyQt6 over older versions that used PyQt5. Due to several namespace changes in the library, make sure that you're no longer relying on PyQt5 anymore if you've used older versions of the program.
-		pip install pyqt6 (or sudo apt-get install python3-pyqt6)
-	13. Make sure "xterm" is the default program for running shell files in any GUI desktop environment system as well as double-checking to make sure that the shell files have executable and read-write permissions. Some other terminals may try running multiple shell instances at the same time - this program is not designed to work that way. All sub application instances must be sequential for each sub application in the bulk image processing "chain" to work properly. No parallel computing allowed.
-	14. Due to lack of font .ttf file location and indexing standardization on Linux distributions, please make sure that you have installed "DejaVuSans.ttf" globally on your system for effective indexing at this time when using the text stamper in the Repixelater sub application. Most distributions should have it by default, but just in case, double-check that if there are any issues.
+	8. Install iPython Python Library
+	9. Install image-enhancement Python library
+	10. Install imutils Python library
+	11. Install PyQt6 Python library for GUI purposes - NOTE: Recent updates now depend on PyQt6 over older versions that used PyQt5. Due to several namespace changes in the library, make sure that you're no longer relying on PyQt5 anymore if you've used older versions of the program.
+	12. Due to lack of font .ttf file location and indexing standardization on Linux distributions, please make sure that you have installed "DejaVuSans.ttf" globally on your system for effective indexing at this time when using the text stamper in the Repixelater sub application. Most distributions should have it by default, but just in case, double-check that if there are any issues.
 
 ###USAGE###
 
@@ -178,6 +179,3 @@ Please see LICENSE file in main program directory for software licensing informa
 --For example, let's say that only images "A.jpg" and "D.jpg" are to be edited in given full image lot of images A-Z.jpg. Only A and D would be in the "Master_Input_Folder," while all images A through Z would be in the "Full_Image_Lot_Optional" folder. All images in-between A and D and after D to Z would be considered in-between images and copied to each of the corresponding output folders of A and D.
 
 ---Visual Example: A.jpg(To Be Edited), B.jpg-C.jpg(In-between images that will be copied to A.jpg's output folder), D.jpg(To Be Edited), E.jpg-Z.jpg(In-between images that will be copied to D.jpg's output folder.)
-### Automatic_Formatter_Master_Program
-# Automatic_Formatter_Master_Program
-# Automatic_Formatter_Master_Program
